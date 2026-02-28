@@ -82,12 +82,12 @@ odo/
 - [x] Role-based dashboard stub
 
 ### Phase 2: User Management (Admin)
-- [ ] GET /api/users - list users (admin only)
-- [ ] POST /api/users - create user (admin only)
-- [ ] PUT /api/users/:id - update user (admin only)
-- [ ] DELETE /api/users/:id - deactivate user (admin only)
-- [ ] Admin user management page
-- [ ] Role assignment UI
+- [x] GET /api/users - list users (admin only)
+- [x] POST /api/users - create user (admin only)
+- [x] PUT /api/users/:id - update user (admin only)
+- [x] DELETE /api/users/:id - deactivate user (admin only)
+- [x] Admin user management page
+- [x] Role assignment UI
 
 ### Phase 3: Category Management
 - [ ] CRUD /api/categories (admin only)
