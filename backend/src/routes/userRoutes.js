@@ -13,15 +13,17 @@ const writeLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-router.use(verifyToken, requireRole('admin'));
+router.use(verifyToken);
 
-router.get('/', userController.getAll);
-// Static routes before parameterized routes
-router.get('/roles', userController.getRoles);
-router.get('/departments', userController.getDepartments);
-router.get('/:id', userController.getById);
-router.post('/', writeLimiter, userController.create);
-router.put('/:id', writeLimiter, userController.update);
-router.delete('/:id', writeLimiter, userController.toggleActive);
+// Read routes: admin and manager can list users (needed for ticket assignment)
+router.get('/', requireRole('admin', 'manager'), userController.getAll);
+router.get('/roles', requireRole('admin'), userController.getRoles);
+router.get('/departments', requireRole('admin'), userController.getDepartments);
+router.get('/:id', requireRole('admin', 'manager'), userController.getById);
+
+// Write routes: admin only
+router.post('/', requireRole('admin'), writeLimiter, userController.create);
+router.put('/:id', requireRole('admin'), writeLimiter, userController.update);
+router.delete('/:id', requireRole('admin'), writeLimiter, userController.toggleActive);
 
 module.exports = router;

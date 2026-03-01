@@ -69,7 +69,7 @@ odo/
 
 ## Implementation Phases
 
-### Phase 1: Authentication & Authorization (CURRENT)
+### Phase 1: Authentication & Authorization
 - [x] Project scaffolding (backend + frontend)
 - [x] MySQL database + tables (users, roles, departments)
 - [x] JWT login endpoint (POST /api/auth/login)
@@ -90,18 +90,21 @@ odo/
 - [x] Role assignment UI
 
 ### Phase 3: Category Management
-- [ ] CRUD /api/categories (admin only)
-- [ ] Category-department linking
-- [ ] Admin category management page
+- [x] CRUD /api/categories (admin only)
+- [x] Category-department linking
+- [x] Admin category management page
 
-### Phase 4: Ticket CRUD
-- [ ] POST /api/tickets - create ticket
-- [ ] GET /api/tickets - list tickets (role-filtered)
-- [ ] GET /api/tickets/:id - ticket detail
-- [ ] PUT /api/tickets/:id - update ticket
-- [ ] Ticket status transition validation (open->in_progress->on_hold->closed)
-- [ ] Ticket history logging
-- [ ] Frontend: ticket list, detail, create form
+### Phase 4: Ticket CRUD (CURRENT)
+- [x] POST /api/tickets - create ticket
+- [x] GET /api/tickets - list tickets (role-filtered)
+- [x] GET /api/tickets/:id - ticket detail
+- [x] PUT /api/tickets/:id - update ticket
+- [x] PUT /api/tickets/:id/status - change status
+- [x] PUT /api/tickets/:id/assign - assign ticket (admin/manager)
+- [x] GET /api/tickets/:id/history - ticket history
+- [x] Ticket status transition validation (open->in_progress->on_hold->closed)
+- [x] Ticket history logging
+- [x] Frontend: ticket list, detail, create form
 
 ### Phase 5: Ticket Workflow
 - [ ] Ticket assignment (manager assigns to self or worker)

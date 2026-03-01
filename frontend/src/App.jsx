@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import UserManagementPage from './pages/UserManagementPage';
 import CategoryManagementPage from './pages/CategoryManagementPage';
+import TicketListPage from './pages/TicketListPage';
+import TicketDetailPage from './pages/TicketDetailPage';
 
 function App() {
   return (
@@ -33,6 +35,22 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <CategoryManagementPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tickets"
+            element={
+              <ProtectedRoute>
+                <TicketListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tickets/:id"
+            element={
+              <ProtectedRoute>
+                <TicketDetailPage />
               </ProtectedRoute>
             }
           />

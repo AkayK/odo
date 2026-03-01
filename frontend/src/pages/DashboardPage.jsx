@@ -47,19 +47,23 @@ export default function DashboardPage() {
         )}
 
         {user.role === 'manager' && (
-          <div className="card">
+          <div
+            className="card card-clickable"
+            onClick={() => navigate('/tickets')}
+          >
             <h3>My Department Tickets</h3>
             <p className="card-detail">
               View and manage tickets for {user.department || 'your department'}
             </p>
-            <p className="card-placeholder">Coming soon...</p>
           </div>
         )}
 
-        <div className="card">
+        <div
+          className="card card-clickable"
+          onClick={() => navigate('/tickets')}
+        >
           <h3>Tickets</h3>
           <p className="card-detail">View and create tickets</p>
-          <p className="card-placeholder">Coming soon...</p>
         </div>
       </div>
     </DashboardLayout>
