@@ -28,9 +28,8 @@ mysql -u root < database/schema.sql
 cd backend
 cp .env.example .env   # edit DB credentials if needed
 npm install
-node src/seeds/seed.js            # creates test users
-node src/seeds/seedCategories.js  # creates sample categories
-npm run dev                       # starts on http://localhost:3001
+npm run seed:all       # seeds departments, categories, users, and sample tickets
+npm run dev            # starts on http://localhost:3001
 ```
 
 ### 3. Frontend
@@ -43,11 +42,24 @@ npm run dev   # starts on http://localhost:5173
 
 ## Test Users
 
-| Role       | Email                  | Password    |
-|------------|------------------------|-------------|
-| Admin      | admin@ticketsys.com    | Admin123!   |
-| Manager    | manager@ticketsys.com  | Manager123! |
-| Worker     | worker@ticketsys.com   | Worker123!  |
+| Role            | Email                        | Password     | Department       |
+|----------------|------------------------------|-------------|------------------|
+| Admin           | admin@ticketsys.com          | Admin123!   | —                |
+| IT Manager      | it.manager@ticketsys.com     | Manager123! | IT               |
+| IT Worker 1     | it.worker1@ticketsys.com     | Worker123!  | IT               |
+| IT Worker 2     | it.worker2@ticketsys.com     | Worker123!  | IT               |
+| HR Manager      | hr.manager@ticketsys.com     | Manager123! | HR               |
+| HR Worker       | hr.worker1@ticketsys.com     | Worker123!  | HR               |
+| Finance Manager | fin.manager@ticketsys.com    | Manager123! | Finance          |
+| Finance Worker  | fin.worker1@ticketsys.com    | Worker123!  | Finance          |
+| Ops Manager     | ops.manager@ticketsys.com    | Manager123! | Operations       |
+| Ops Worker      | ops.worker1@ticketsys.com    | Worker123!  | Operations       |
+| Mkt Manager     | mkt.manager@ticketsys.com    | Manager123! | Marketing        |
+| Mkt Worker      | mkt.worker1@ticketsys.com    | Worker123!  | Marketing        |
+| CS Manager      | cs.manager@ticketsys.com     | Manager123! | Customer Support |
+| CS Worker       | cs.worker1@ticketsys.com     | Worker123!  | Customer Support |
+
+Legacy aliases: `manager@ticketsys.com` / `worker@ticketsys.com` (both IT dept)
 
 ## Environment Variables
 
