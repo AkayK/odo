@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import UserManagementPage from './pages/UserManagementPage';
 import CategoryManagementPage from './pages/CategoryManagementPage';
+import DepartmentManagementPage from './pages/DepartmentManagementPage';
 import TicketListPage from './pages/TicketListPage';
 import TicketDetailPage from './pages/TicketDetailPage';
 
@@ -35,6 +36,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <CategoryManagementPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/departments"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <DepartmentManagementPage />
               </ProtectedRoute>
             }
           />

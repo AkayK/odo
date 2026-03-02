@@ -10,7 +10,7 @@ const VALID_TRANSITIONS = {
   open: ['in_progress', 'closed'],
   in_progress: ['on_hold', 'closed'],
   on_hold: ['in_progress'],
-  closed: [],
+  closed: ['open'],
 };
 
 const MAX_TITLE_LENGTH = 255;

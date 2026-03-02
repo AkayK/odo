@@ -657,6 +657,11 @@ body {
   color: #455a64;
 }
 
+.btn-status-open {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
 /* Assign select */
 .assign-select {
   width: 100%;

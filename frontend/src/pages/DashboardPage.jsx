@@ -43,6 +43,13 @@ export default function DashboardPage() {
               <h3>Category Management</h3>
               <p className="card-detail">Manage ticket categories</p>
             </div>
+            <div
+              className="card card-clickable"
+              onClick={() => navigate('/admin/departments')}
+            >
+              <h3>Department Management</h3>
+              <p className="card-detail">Create and manage departments</p>
+            </div>
           </>
         )}
 

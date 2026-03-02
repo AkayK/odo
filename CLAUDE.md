@@ -106,12 +106,14 @@ odo/
 - [x] Ticket history logging
 - [x] Frontend: ticket list, detail, create form
 
-### Phase 5: Ticket Workflow
-- [ ] Ticket assignment (manager assigns to self or worker)
-- [ ] Priority update (manager/admin only)
-- [ ] Status change with history tracking
-- [ ] Reopen closed tickets (optional)
-- [ ] Department-filtered views for managers
+### Phase 5: Ticket Workflow & Department Management
+- [x] Ticket assignment (manager assigns to self or worker)
+- [x] Priority update (manager/admin only)
+- [x] Status change with history tracking
+- [x] Reopen closed tickets (closed -> open)
+- [x] Department-filtered views for managers
+- [x] CRUD /api/departments (admin only)
+- [x] Admin department management page
 
 ### Phase 6: Dashboard & Polish
 - [ ] Role-based dashboard with stats
@@ -127,7 +129,7 @@ odo/
 - `GET /api/auth/me` - Get current user (requires token)
 
 ### Users (Phase 2)
-- `GET /api/users` - List users (admin)
+- `GET /api/users` - List users (admin, manager)
 - `POST /api/users` - Create user (admin)
 - `PUT /api/users/:id` - Update user (admin)
 - `DELETE /api/users/:id` - Deactivate user (admin)
@@ -147,13 +149,32 @@ odo/
 - `PUT /api/tickets/:id/assign` - Assign ticket (manager/admin)
 - `GET /api/tickets/:id/history` - Get ticket history
 
+### Departments (Phase 5)
+- `GET /api/departments` - List departments
+- `POST /api/departments` - Create department (admin)
+- `PUT /api/departments/:id` - Update department (admin)
+- `DELETE /api/departments/:id` - Deactivate department (admin)
+
 ## Test Users
 
-| Role       | Email                  | Password     |
-|-----------|------------------------|-------------|
-| Admin      | admin@ticketsys.com    | Admin123!   |
-| IT Manager | manager@ticketsys.com  | Manager123! |
-| IT Worker  | worker@ticketsys.com   | Worker123!  |
+| Role            | Email                        | Password     | Department       |
+|----------------|------------------------------|-------------|------------------|
+| Admin           | admin@ticketsys.com          | Admin123!   | —                |
+| IT Manager      | it.manager@ticketsys.com     | Manager123! | IT               |
+| IT Worker 1     | it.worker1@ticketsys.com     | Worker123!  | IT               |
+| IT Worker 2     | it.worker2@ticketsys.com     | Worker123!  | IT               |
+| HR Manager      | hr.manager@ticketsys.com     | Manager123! | HR               |
+| HR Worker       | hr.worker1@ticketsys.com     | Worker123!  | HR               |
+| Finance Manager | fin.manager@ticketsys.com    | Manager123! | Finance          |
+| Finance Worker  | fin.worker1@ticketsys.com    | Worker123!  | Finance          |
+| Ops Manager     | ops.manager@ticketsys.com    | Manager123! | Operations       |
+| Ops Worker      | ops.worker1@ticketsys.com    | Worker123!  | Operations       |
+| Mkt Manager     | mkt.manager@ticketsys.com    | Manager123! | Marketing        |
+| Mkt Worker      | mkt.worker1@ticketsys.com    | Worker123!  | Marketing        |
+| CS Manager      | cs.manager@ticketsys.com     | Manager123! | Customer Support |
+| CS Worker       | cs.worker1@ticketsys.com     | Worker123!  | Customer Support |
+
+Legacy aliases: `manager@ticketsys.com` / `worker@ticketsys.com` (both IT dept)
 
 ## Git Workflow
 - Conventional commits: feat:, fix:, refactor:, docs:, chore:
