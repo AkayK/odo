@@ -50,7 +50,6 @@ const dashboardModel = {
   async recentTickets(limit, scope) {
     const safeLimit = Number.isInteger(limit) && limit > 0 && limit <= 100 ? limit : 5;
     const { where, params } = buildWhereClause(scope);
-    params.push(String(safeLimit));
     const [rows] = await pool.execute(
       `SELECT t.id, t.title, t.priority, t.status, t.created_at, t.updated_at,
               d.name AS department_name,
@@ -60,7 +59,7 @@ const dashboardModel = {
        LEFT JOIN users au ON t.assigned_to = au.id
        ${where}
        ORDER BY t.updated_at DESC
-       LIMIT ?`,
+       LIMIT ${safeLimit}`,
       params
     );
     return rows;
