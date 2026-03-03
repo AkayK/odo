@@ -724,6 +724,129 @@ body {
   font-weight: 500;
 }
 
+/* Dashboard stat cards */
+.dashboard-top {
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-top h2 {
+  margin-bottom: 0.25rem;
+}
+
+.stat-cards-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  text-align: center;
+}
+
+.stat-card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a1a2e;
+}
+
+.stat-card-label {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Distribution bars */
+.dist-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.dist-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dist-bar-label {
+  font-size: 0.85rem;
+  color: #555;
+  min-width: 90px;
+  text-align: right;
+}
+
+.dist-bar-track {
+  flex: 1;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dist-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  min-width: 2px;
+}
+
+.dist-bar-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  min-width: 30px;
+}
+
+/* Embedded data table (no outer shadow) */
+.data-table-embedded {
+  box-shadow: none;
+  margin-top: 0.75rem;
+}
+
+/* Sortable headers */
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.sortable-header:hover {
+  color: #4a6cf7;
+}
+
+/* Filter search input */
+.filter-search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  min-width: 180px;
+}
+
+.filter-search-input:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.15);
+}
+
 @media (max-width: 768px) {
   .ticket-detail-grid {
     grid-template-columns: 1fr;
@@ -731,5 +854,13 @@ body {
 
   .filter-bar {
     flex-wrap: wrap;
+  }
+
+  .stat-cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -105,11 +105,12 @@ async function logChanges(ticketId, changedBy, oldTicket, newFields) {
 }
 
 const ticketService = {
-  async getAll(currentUser) {
+  async getAll(currentUser, filters = {}) {
     const rows = await ticketModel.findAll({
       role: currentUser.role,
       userId: currentUser.id,
       departmentId: currentUser.departmentId,
+      filters,
     });
     return rows.map(toTicketDTO);
   },
@@ -176,6 +177,13 @@ const ticketService = {
     if (currentUser.role === 'worker') {
       if (data.priority !== undefined) {
         throw new ForbiddenError('Workers cannot change ticket priority');
+      }
+    }
+
+    if (currentUser.role === 'manager') {
+      const disallowed = ['title', 'description', 'categoryId'].filter((f) => data[f] !== undefined);
+      if (disallowed.length > 0) {
+        throw new ForbiddenError('Managers may only update ticket priority');
       }
     }
 

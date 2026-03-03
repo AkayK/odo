@@ -15,23 +15,69 @@ const BASE_SELECT = `
   JOIN users cu ON t.created_by = cu.id
   LEFT JOIN users au ON t.assigned_to = au.id`;
 
+const SORT_WHITELIST = {
+  created_at: 't.created_at',
+  updated_at: 't.updated_at',
+  title: 't.title',
+  priority: "FIELD(t.priority, 'low', 'medium', 'high', 'critical')",
+  status: "FIELD(t.status, 'open', 'in_progress', 'on_hold', 'closed')",
+};
+
 const ticketModel = {
-  async findAll({ role, userId, departmentId }) {
-    let where = '';
+  async findAll({ role, userId, departmentId, filters = {} }) {
+    const conditions = [];
     const params = [];
 
-    if (role === 'admin') {
-      where = '';
-    } else if (role === 'manager') {
-      where = 'WHERE t.department_id = ?';
+    if (role === 'manager') {
+      conditions.push('t.department_id = ?');
       params.push(departmentId);
-    } else {
-      where = 'WHERE (t.created_by = ? OR t.assigned_to = ?)';
+    } else if (role !== 'admin') {
+      conditions.push('(t.created_by = ? OR t.assigned_to = ?)');
       params.push(userId, userId);
     }
 
+    if (filters.status) {
+      conditions.push('t.status = ?');
+      params.push(filters.status);
+    }
+
+    if (filters.priority) {
+      conditions.push('t.priority = ?');
+      params.push(filters.priority);
+    }
+
+    if (filters.departmentId && role === 'admin') {
+      conditions.push('t.department_id = ?');
+      params.push(filters.departmentId);
+    }
+
+    if (filters.categoryId) {
+      conditions.push('t.category_id = ?');
+      params.push(filters.categoryId);
+    }
+
+    if (filters.assignedTo) {
+      if (filters.assignedTo === 'unassigned') {
+        conditions.push('t.assigned_to IS NULL');
+      } else {
+        conditions.push('t.assigned_to = ?');
+        params.push(filters.assignedTo);
+      }
+    }
+
+    if (filters.search) {
+      conditions.push('(t.title LIKE ? OR t.description LIKE ?)');
+      const term = `%${filters.search}%`;
+      params.push(term, term);
+    }
+
+    const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+
+    const sortCol = SORT_WHITELIST[filters.sortBy] || 't.updated_at';
+    const sortOrder = filters.sortOrder === 'ASC' ? 'ASC' : 'DESC';
+
     const [rows] = await pool.execute(
-      `${BASE_SELECT} ${where} ORDER BY t.updated_at DESC`,
+      `${BASE_SELECT} ${where} ORDER BY ${sortCol} ${sortOrder}`,
       params
     );
     return rows;

@@ -5,7 +5,7 @@ const verifyToken = (req, _res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new UnauthorizedError('No token provided');
+    return next(new UnauthorizedError('No token provided'));
   }
 
   const token = authHeader.split(' ')[1];
@@ -15,18 +15,18 @@ const verifyToken = (req, _res, next) => {
     req.user = decoded;
     next();
   } catch {
-    throw new UnauthorizedError('Invalid or expired token');
+    return next(new UnauthorizedError('Invalid or expired token'));
   }
 };
 
 const requireRole = (...allowedRoles) => {
   return (req, _res, next) => {
     if (!req.user) {
-      throw new UnauthorizedError();
+      return next(new UnauthorizedError());
     }
 
     if (!allowedRoles.includes(req.user.role)) {
-      throw new ForbiddenError();
+      return next(new ForbiddenError());
     }
 
     next();

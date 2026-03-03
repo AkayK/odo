@@ -116,11 +116,11 @@ odo/
 - [x] Admin department management page
 
 ### Phase 6: Dashboard & Polish
-- [ ] Role-based dashboard with stats
-- [ ] Ticket filtering/sorting
-- [ ] ER diagram generation
-- [ ] README documentation
-- [ ] Final cleanup and testing
+- [x] Role-based dashboard with stats
+- [x] Ticket filtering/sorting
+- [x] ER diagram generation
+- [x] README documentation
+- [x] Final cleanup and testing
 
 ## API Endpoints
 
@@ -154,6 +154,9 @@ odo/
 - `POST /api/departments` - Create department (admin)
 - `PUT /api/departments/:id` - Update department (admin)
 - `DELETE /api/departments/:id` - Deactivate department (admin)
+
+### Dashboard (Phase 6)
+- `GET /api/dashboard/stats` - Dashboard statistics (role-filtered)
 
 ## Test Users
 

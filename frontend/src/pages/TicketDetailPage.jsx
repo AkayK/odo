@@ -91,6 +91,20 @@ export default function TicketDetailPage() {
     }
   };
 
+  const handlePriorityChange = async (e) => {
+    const newPriority = e.target.value;
+    if (newPriority === ticket.priority) return;
+    setActionError('');
+    try {
+      const updated = await ticketService.update(id, { priority: newPriority });
+      setTicket(updated);
+      const updatedHistory = await ticketService.getHistory(id);
+      setHistory(updatedHistory);
+    } catch (err) {
+      setActionError(err.response?.data?.error || 'Failed to change priority');
+    }
+  };
+
   const handleAssign = async (e) => {
     const assignedTo = e.target.value ? Number(e.target.value) : null;
     setActionError('');
@@ -159,11 +173,15 @@ export default function TicketDetailPage() {
     }
   };
 
+  const isAdmin = user.role === 'admin';
+  const isManager = user.role === 'manager';
+
   const canEdit = ticket && ticket.status !== 'closed' && (
-    isAdminOrManager ||
-    ticket.createdBy.id === user.id ||
-    (ticket.assignedTo && ticket.assignedTo.id === user.id)
+    isAdmin ||
+    (isWorker && (ticket.createdBy.id === user.id || (ticket.assignedTo && ticket.assignedTo.id === user.id)))
   );
+
+  const canChangePriority = ticket && ticket.status !== 'closed' && (isAdmin || isManager);
 
   const allowedTransitions = ticket ? (VALID_TRANSITIONS[ticket.status] || []) : [];
   const visibleTransitions = isWorker
@@ -302,9 +320,21 @@ export default function TicketDetailPage() {
 
           <div className="card">
             <h4>Priority</h4>
-            <span className={`priority-badge priority-${ticket.priority}`}>
-              {priorityLabels[ticket.priority]}
-            </span>
+            {canChangePriority ? (
+              <select
+                className="assign-select"
+                value={ticket.priority}
+                onChange={handlePriorityChange}
+              >
+                {Object.entries(priorityLabels).map(([val, label]) => (
+                  <option key={val} value={val}>{label}</option>
+                ))}
+              </select>
+            ) : (
+              <span className={`priority-badge priority-${ticket.priority}`}>
+                {priorityLabels[ticket.priority]}
+              </span>
+            )}
           </div>
 
           <div className="card">

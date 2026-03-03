@@ -10,9 +10,40 @@ function parseId(raw) {
   return id;
 }
 
+const VALID_FILTER_STATUSES = ['open', 'in_progress', 'on_hold', 'closed'];
+const VALID_FILTER_PRIORITIES = ['low', 'medium', 'high', 'critical'];
+const MAX_SEARCH_LENGTH = 200;
+
 const ticketController = {
   async getAll(req, res) {
-    const tickets = await ticketService.getAll(req.user);
+    const { status, priority, departmentId, categoryId, assignedTo, search, sortBy, sortOrder } = req.query;
+    const filters = {};
+
+    if (status) {
+      if (!VALID_FILTER_STATUSES.includes(status)) {
+        throw new ValidationError('Invalid status filter');
+      }
+      filters.status = status;
+    }
+    if (priority) {
+      if (!VALID_FILTER_PRIORITIES.includes(priority)) {
+        throw new ValidationError('Invalid priority filter');
+      }
+      filters.priority = priority;
+    }
+    if (departmentId) filters.departmentId = Number(departmentId);
+    if (categoryId) filters.categoryId = Number(categoryId);
+    if (assignedTo) filters.assignedTo = assignedTo === 'unassigned' ? 'unassigned' : Number(assignedTo);
+    if (search) {
+      if (search.length > MAX_SEARCH_LENGTH) {
+        throw new ValidationError(`Search term too long (max ${MAX_SEARCH_LENGTH} characters)`);
+      }
+      filters.search = search;
+    }
+    if (sortBy) filters.sortBy = sortBy;
+    if (sortOrder) filters.sortOrder = sortOrder;
+
+    const tickets = await ticketService.getAll(req.user, filters);
     res.json({ success: true, data: tickets });
   },
 

@@ -1,8 +1,16 @@
 import api from './api';
 
 export const ticketService = {
-  async getAll() {
-    const { data } = await api.get('/tickets');
+  async getAll(filters = {}) {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(filters)) {
+      if (value !== undefined && value !== null && value !== '') {
+        params.append(key, value);
+      }
+    }
+    const query = params.toString();
+    const url = query ? `/tickets?${query}` : '/tickets';
+    const { data } = await api.get(url);
     return data.data;
   },
 
